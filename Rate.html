@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RATING DISHES</title>
+  <script src="https://kit.fontawesome.com/996973c893.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style type="text/css">
+    body{
+      background-color: #fff;
+    }
+  .stars-outer {
+  position: relative;
+  display: inline-block;
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.stars-outer::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #ccc;
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #f8ce0b;
+}
+  
+</style>
+
+</head>
+<body>
+
+
+
+<div class="container mt-5">
+  <div class="form-group">
+    <select id="category-select" class="form-control custom-select">
+        <option value="0" disabled selected>Select Category</option>
+        <option value="don">Donuts</option>
+        <option value="cup">Cupcakes</option>
+        <option value="cake">Cakes</option>
+        <option value="choc">Chocolates</option>
+        <option value="shake">Shakes</option>
+        <option value="candy">Candies</option>
+        <option value="pan">Pancakes</option>
+      </select>
+  </div>
+  <div class="form-group">
+    <input type="number" id="rating-control" class="form-control" step="0.1" max="5" placeholder="Rate 1 - 5" disabled  style="text-align: center;">
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="don">
+        <td>Donuts</td>
+        <td>
+          <div class="stars-outer">
+            <div class="stars-inner"></div>
+          </div>
+          <span class="number-rating"></span>
+        </td>
+      </tr>
+      <tr class="cup">
+        <td>Cupcakes</td>
+        <td>
+          <div class="stars-outer">
+            <div class="stars-inner"></div>
+          </div>
+          <span class="number-rating"></span>
+        </td>
+      </tr>
+      <tr class="cake">
+        <td>Cakes</td>
+        <td>
+          <div class="stars-outer">
+            <div class="stars-inner"></div>
+          </div>
+          <span class="number-rating"></span>
+        </td>
+      </tr>
+      <tr class="choc">
+        <td>Chocolates</td>
+        <td>
+          <div class="stars-outer">
+            <div class="stars-inner"></div>
+          </div>
+          <span class="number-rating"></span>
+        </td>
+      </tr>
+      <tr class="shake">
+        <td>Shakes</td>
+        <td>
+          <div class="stars-outer">
+            <div class="stars-inner"></div>
+          </div>
+          <span class="number-rating"></span>
+        </td>
+      </tr>
+      <tr class="candy">
+        <td>Candies</td>
+        <td>
+          <div class="stars-outer">
+            <div class="stars-inner"></div>
+          </div>
+          <span class="number-rating"></span>
+        </td>
+      </tr>
+      <tr class="pan">
+        <td>Pancakes</td>
+        <td>
+          <div class="stars-outer">
+            <div class="stars-inner"></div>
+          </div>
+          <span class="number-rating"></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script type="text/javascript">
+  // Initial Ratings
+    const ratings = {
+      don: 4.7,
+      cup: 3.4,
+      cake: 2.3,
+      choc: 3.6,
+      shake: 4.1,
+      candy: 3.8,
+      pan: 1.8
+    }
+
+    // Total Stars
+    const starsTotal = 5;
+
+    // Run getRatings when DOM loads
+    document.addEventListener('DOMContentLoaded', getRatings);
+
+    // Form Elements
+    const categorySelect = document.getElementById('category-select');
+    const ratingControl = document.getElementById('rating-control');
+
+    // Init product
+    let product;
+
+    // Product select change
+    categorySelect.addEventListener('change', (e) => {
+      product = e.target.value;
+      // Enable rating control
+      ratingControl.disabled = false;
+      ratingControl.value = ratings[product];
+    });
+
+    // Rating control change
+    ratingControl.addEventListener('blur', (e) => {
+      const rating = e.target.value;
+
+      // Make sure 5 or under
+      if (rating > 5) {
+        alert('Please rate 1 - 5');
+        return;
+      }
+
+      // Change rating
+      ratings[product] = rating;
+
+      getRatings();
+    });
+
+    // Get ratings
+    function getRatings() {
+      for (let rating in ratings) {
+        // Get percentage
+        const starPercentage = (ratings[rating] / starsTotal) * 100;
+
+        // Round to nearest 10
+        const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+
+        // Set width of stars-inner to percentage
+        document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
+
+        // Add number rating
+        document.querySelector(`.${rating} .number-rating`).innerHTML = ratings[rating];
+      }
+    }
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
